@@ -1,6 +1,12 @@
-export type BridgeResponse<T = unknown> =
-  | { success: true; data: T }
-  | { success: false; error?: string; code?: string };
+import type {
+  BridgeResponse,
+  GetBalanceRequest,
+  GetBalanceResponse,
+  GetWalletRequest,
+  GetWalletResponse,
+  StartNDARequest,
+  StartNDAResponse,
+} from './types/bridge.types';
 
 declare global {
   interface Window {
@@ -32,6 +38,18 @@ class FlutterBridge {
         code: 'BRIDGE_ERROR',
       };
     }
+  }
+
+  async startNDA(request: StartNDARequest): Promise<BridgeResponse<StartNDAResponse>> {
+    return this.callHandler<StartNDAResponse, StartNDARequest>('startNDA', request);
+  }
+
+  async getBalance(request: GetBalanceRequest): Promise<BridgeResponse<GetBalanceResponse>> {
+    return this.callHandler<GetBalanceResponse, GetBalanceRequest>('getBalance', request);
+  }
+
+  async getWallet(request: GetWalletRequest): Promise<BridgeResponse<GetWalletResponse>> {
+    return this.callHandler<GetWalletResponse, GetWalletRequest>('getWallet', request);
   }
 }
 
