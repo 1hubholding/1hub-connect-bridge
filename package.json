@@ -1,5 +1,5 @@
 {
-  "name": "flutter-bridge-rn",
+  "name": "onehub-connect-bridge",
   "version": "1.0.0",
   "description": "Flutter WebView bridge for React/TypeScript",
   "main": "dist/index.js",
