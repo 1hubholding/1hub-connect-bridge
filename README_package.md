@@ -9,8 +9,15 @@ A TypeScript library for communicating between a React/web app running inside a 
 
 ## Installation
 
-```pnpm
+```bash
 pnpm i github:1hubholding/1hub-connect-bridge
+```
+
+If you use pnpm, add the package to `onlyBuiltDependencies` in your `pnpm-workspace.yaml`:
+
+```yaml
+onlyBuiltDependencies:
+  - onehub-connect-bridge
 ```
 
 ## Usage
