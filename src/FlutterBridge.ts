@@ -4,6 +4,8 @@ import type {
   GetBalanceResponse,
   GetWalletRequest,
   GetWalletResponse,
+  ShowConsentRequest,
+  ShowConsentResponse,
   StartNDARequest,
   StartNDAResponse,
 } from './types/bridge.types';
@@ -50,6 +52,10 @@ class FlutterBridge {
 
   async getWallet(request: GetWalletRequest): Promise<BridgeResponse<GetWalletResponse>> {
     return this.callHandler<GetWalletResponse, GetWalletRequest>('getWallet', request);
+  }
+
+  async showConsent(request: ShowConsentRequest): Promise<BridgeResponse<ShowConsentResponse>> {
+    return this.callHandler<ShowConsentResponse, ShowConsentRequest>('showConsent', request);
   }
 }
 

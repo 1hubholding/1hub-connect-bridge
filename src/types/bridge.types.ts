@@ -42,3 +42,16 @@ export interface GetWalletResponse {
   address: string;
   createdAt: string;
 }
+
+
+// ============================================
+// Show Consent
+// ============================================
+
+export interface ShowConsentRequest {
+}
+
+export interface ShowConsentResponse {
+  consented: boolean;
+  code: string;
+}
