@@ -7,7 +7,15 @@ export type {
   GetWalletRequest,
   GetWalletResponse,
   ShowConsentRequest,
-  ShowConsentResponse
+  ShowConsentResponse,
+  ShowCameraRequest,
+  ShowCameraResponse,
+  RequestSSOCodeRequest,
+  RequestSSOCodeResponse,
+  GetHPayPaymentUrlRequest,
+  GetHPayPaymentUrlResponse,
+  OpenURLRequest,
+  OpenURLResponse,
 } from './types/bridge.types';
 export { default } from './FlutterBridge';
 export { default as FlutterBridge } from './FlutterBridge';

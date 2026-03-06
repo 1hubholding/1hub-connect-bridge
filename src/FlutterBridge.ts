@@ -2,8 +2,16 @@ import type {
   BridgeResponse,
   GetBalanceRequest,
   GetBalanceResponse,
+  GetHPayPaymentUrlRequest,
+  GetHPayPaymentUrlResponse,
   GetWalletRequest,
   GetWalletResponse,
+  OpenURLRequest,
+  OpenURLResponse,
+  RequestSSOCodeRequest,
+  RequestSSOCodeResponse,
+  ShowCameraRequest,
+  ShowCameraResponse,
   ShowConsentRequest,
   ShowConsentResponse,
   StartNDARequest,
@@ -56,6 +64,22 @@ class FlutterBridge {
 
   async showConsent(request: ShowConsentRequest): Promise<BridgeResponse<ShowConsentResponse>> {
     return this.callHandler<ShowConsentResponse, ShowConsentRequest>('showConsent', request);
+  }
+
+  async showCamera(request: ShowCameraRequest): Promise<BridgeResponse<ShowCameraResponse>> {
+    return this.callHandler<ShowCameraResponse, ShowCameraRequest>('showCamera', request);
+  }
+
+  async requestSSOCode(request: RequestSSOCodeRequest): Promise<BridgeResponse<RequestSSOCodeResponse>> {
+    return this.callHandler<RequestSSOCodeResponse, RequestSSOCodeRequest>('requestSSOCode', request);
+  }
+
+  async getHPayPaymentUrl(request: GetHPayPaymentUrlRequest): Promise<BridgeResponse<GetHPayPaymentUrlResponse>> {
+    return this.callHandler<GetHPayPaymentUrlResponse, GetHPayPaymentUrlRequest>('getHPayPaymentUrl', request);
+  }
+
+  async openURL(request: OpenURLRequest): Promise<BridgeResponse<OpenURLResponse>> {
+    return this.callHandler<OpenURLResponse, OpenURLRequest>('openURL', request);
   }
 }
 
