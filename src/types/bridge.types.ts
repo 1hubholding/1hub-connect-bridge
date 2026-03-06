@@ -34,8 +34,9 @@ export const GetBalanceRequestSchema = z.object({
 
 export const GetBalanceResponseSchema = z.object({
   balance: z.number(),
-  currency: z.string(),
-  updatedAt: z.string().optional(),
+  price: z.number(),
+  chainType: z.string(),
+  name: z.string(),
 });
 
 export type GetBalanceRequest = z.infer<typeof GetBalanceRequestSchema>;
@@ -49,7 +50,8 @@ export const GetWalletRequestSchema = z.object({});
 
 const WalletAccountSchema = z.object({
   address: z.string(),
-  createdAt: z.string(),
+  chainType: z.string(),
+  name: z.string(),
 });
 
 export const GetWalletResponseSchema = z.array(WalletAccountSchema);
