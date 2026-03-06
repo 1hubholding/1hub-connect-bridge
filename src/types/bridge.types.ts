@@ -58,19 +58,6 @@ export type GetWalletRequest = z.infer<typeof GetWalletRequestSchema>;
 export type GetWalletResponse = z.infer<typeof GetWalletResponseSchema>;
 
 // ============================================
-// Show Consent
-// ============================================
-
-export const ShowConsentRequestSchema = z.object({});
-
-export const ShowConsentResponseSchema = z.object({
-  consented: z.boolean(),
-});
-
-export type ShowConsentRequest = z.infer<typeof ShowConsentRequestSchema>;
-export type ShowConsentResponse = z.infer<typeof ShowConsentResponseSchema>;
-
-// ============================================
 // Camera
 // ============================================
 
@@ -117,7 +104,6 @@ export type RequestSSOCodeResponse = z.infer<typeof RequestSSOCodeResponseSchema
 
 export const GetHPayPaymentUrlRequestSchema = z.object({
   orderId: z.string(),
-
 });
 
 export const GetHPayPaymentUrlResponseSchema = z.object({

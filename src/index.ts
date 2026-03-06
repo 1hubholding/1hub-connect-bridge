@@ -6,8 +6,6 @@ export type {
   GetBalanceResponse,
   GetWalletRequest,
   GetWalletResponse,
-  ShowConsentRequest,
-  ShowConsentResponse,
   ShowCameraRequest,
   ShowCameraResponse,
   RequestSSOCodeRequest,

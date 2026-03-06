@@ -61,11 +61,7 @@ class FlutterBridge {
   async getWallet(request: GetWalletRequest): Promise<BridgeResponse<GetWalletResponse>> {
     return this.callHandler<GetWalletResponse, GetWalletRequest>('getWallet', request);
   }
-
-  async showConsent(request: ShowConsentRequest): Promise<BridgeResponse<ShowConsentResponse>> {
-    return this.callHandler<ShowConsentResponse, ShowConsentRequest>('showConsent', request);
-  }
-
+  
   async showCamera(request: ShowCameraRequest): Promise<BridgeResponse<ShowCameraResponse>> {
     return this.callHandler<ShowCameraResponse, ShowCameraRequest>('showCamera', request);
   }

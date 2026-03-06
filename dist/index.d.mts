@@ -1,4 +1,6 @@
-type BridgeResponse<T> = {
+import { z } from 'zod';
+
+type BridgeResponse<T = unknown> = {
     success: true;
     data: T;
 } | {
@@ -6,134 +8,91 @@ type BridgeResponse<T> = {
     error?: string;
     code?: string;
 };
-interface BridgeHandlers {
-    openCamera: {
-        request: {
-            quality?: number;
-            maxWidth?: number;
-            maxHeight?: number;
-            saveToGallery?: boolean;
-        };
-        response: BridgeResponse<{
-            uri: string;
-            fileName?: string;
-            mimeType?: string;
-            fileSize?: number;
-        }>;
-    };
-    openGallery: {
-        request: {
-            multiple?: boolean;
-            maxFiles?: number;
-            quality?: number;
-        };
-        response: BridgeResponse<{
-            uris: string[];
-            fileNames?: string[];
-            mimeTypes?: string[];
-        }>;
-    };
-    getLocation: {
-        request: {
-            highAccuracy?: boolean;
-            timeout?: number;
-        };
-        response: BridgeResponse<{
-            latitude: number;
-            longitude: number;
-            accuracy?: number;
-            altitude?: number;
-        }>;
-    };
-    getUserInfo: {
-        request: Record<string, never>;
-        response: BridgeResponse<{
-            id: string;
-            name?: string;
-            email?: string;
-            phone?: string;
-            avatar?: string;
-        }>;
-    };
-    share: {
-        request: {
-            title?: string;
-            text?: string;
-            url?: string;
-        };
-        response: BridgeResponse<void>;
-    };
-    setStorage: {
-        request: {
-            key: string;
-            value: string;
-        };
-        response: BridgeResponse<void>;
-    };
-    getStorage: {
-        request: {
-            key: string;
-        };
-        response: BridgeResponse<string | null>;
-    };
-}
-type BridgeHandlerName = keyof BridgeHandlers;
+declare const StartNDARequestSchema: z.ZodObject<{}, z.core.$strip>;
+declare const StartNDAResponseSchema: z.ZodObject<{}, z.core.$strip>;
+type StartNDARequest = z.infer<typeof StartNDARequestSchema>;
+type StartNDAResponse = z.infer<typeof StartNDAResponseSchema>;
+declare const GetBalanceRequestSchema: z.ZodObject<{
+    address: z.ZodString;
+}, z.core.$strip>;
+declare const GetBalanceResponseSchema: z.ZodObject<{
+    balance: z.ZodNumber;
+    currency: z.ZodString;
+    updatedAt: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+type GetBalanceRequest = z.infer<typeof GetBalanceRequestSchema>;
+type GetBalanceResponse = z.infer<typeof GetBalanceResponseSchema>;
+declare const GetWalletRequestSchema: z.ZodObject<{}, z.core.$strip>;
+declare const GetWalletResponseSchema: z.ZodArray<z.ZodObject<{
+    address: z.ZodString;
+    createdAt: z.ZodString;
+}, z.core.$strip>>;
+type GetWalletRequest = z.infer<typeof GetWalletRequestSchema>;
+type GetWalletResponse = z.infer<typeof GetWalletResponseSchema>;
+declare const ShowConsentRequestSchema: z.ZodObject<{}, z.core.$strip>;
+declare const ShowConsentResponseSchema: z.ZodObject<{
+    consented: z.ZodBoolean;
+}, z.core.$strip>;
+type ShowConsentRequest = z.infer<typeof ShowConsentRequestSchema>;
+type ShowConsentResponse = z.infer<typeof ShowConsentResponseSchema>;
+declare const ShowCameraRequestSchema: z.ZodObject<{
+    imageQuality: z.ZodOptional<z.ZodInt>;
+    maxHeight: z.ZodOptional<z.ZodNumber>;
+    maxWidth: z.ZodOptional<z.ZodNumber>;
+}, z.core.$strip>;
+declare const ShowCameraResponseSchema: z.ZodObject<{
+    path: z.ZodString;
+    base64: z.ZodBase64;
+    name: z.ZodString;
+    width: z.ZodOptional<z.ZodNumber>;
+    height: z.ZodOptional<z.ZodNumber>;
+}, z.core.$strip>;
+type ShowCameraRequest = z.infer<typeof ShowCameraRequestSchema>;
+type ShowCameraResponse = z.infer<typeof ShowCameraResponseSchema>;
+declare const RequestSSOCodeRequestSchema: z.ZodObject<{
+    clientId: z.ZodString;
+    redirectUri: z.ZodString;
+    scope: z.ZodString;
+}, z.core.$strip>;
+declare const RequestSSOCodeResponseSchema: z.ZodObject<{
+    code: z.ZodString;
+    codeVerifier: z.ZodString;
+}, z.core.$strip>;
+type RequestSSOCodeRequest = z.infer<typeof RequestSSOCodeRequestSchema>;
+type RequestSSOCodeResponse = z.infer<typeof RequestSSOCodeResponseSchema>;
+declare const GetHPayPaymentUrlRequestSchema: z.ZodObject<{
+    orderId: z.ZodString;
+}, z.core.$strip>;
+declare const GetHPayPaymentUrlResponseSchema: z.ZodObject<{
+    url: z.ZodString;
+}, z.core.$strip>;
+type GetHPayPaymentUrlRequest = z.infer<typeof GetHPayPaymentUrlRequestSchema>;
+type GetHPayPaymentUrlResponse = z.infer<typeof GetHPayPaymentUrlResponseSchema>;
+declare const OpenURLRequestSchema: z.ZodObject<{
+    url: z.ZodString;
+}, z.core.$strip>;
+declare const OpenURLResponseSchema: z.ZodObject<{}, z.core.$strip>;
+type OpenURLRequest = z.infer<typeof OpenURLRequestSchema>;
+type OpenURLResponse = z.infer<typeof OpenURLResponseSchema>;
 
 declare global {
     interface Window {
         flutter_inappwebview?: {
-            callHandler<T extends BridgeHandlerName>(handlerName: T, ...args: BridgeHandlers[T]['request'] extends Record<string, never> ? [] : [BridgeHandlers[T]['request']]): Promise<BridgeHandlers[T]['response']>;
+            callHandler(handlerName: string, ...args: unknown[]): Promise<unknown>;
         };
     }
 }
 declare class FlutterBridge {
-    private readonly isFlutterApp;
-    constructor();
-    isAvailable(): boolean;
-    private callHandler;
-    private isSuccess;
-    private unwrapResponse;
-    openCamera(options?: BridgeHandlers['openCamera']['request']): Promise<BridgeResponse<{
-        uri: string;
-        fileName?: string;
-        mimeType?: string;
-        fileSize?: number;
-    }>>;
-    openGallery(options?: BridgeHandlers['openGallery']['request']): Promise<BridgeResponse<{
-        uris: string[];
-        fileNames?: string[];
-        mimeTypes?: string[];
-    }>>;
-    getLocation(options?: BridgeHandlers['getLocation']['request']): Promise<BridgeResponse<{
-        latitude: number;
-        longitude: number;
-        accuracy?: number;
-        altitude?: number;
-    }>>;
-    getUserInfo(): Promise<BridgeResponse<{
-        id: string;
-        name?: string;
-        email?: string;
-        phone?: string;
-        avatar?: string;
-    }>>;
-    share(options: BridgeHandlers['share']['request']): Promise<BridgeResponse<void>>;
-    setStorage(key: string, value: string): Promise<BridgeResponse<void>>;
-    getStorage(key: string): Promise<BridgeResponse<string | null>>;
-    openCameraOrThrow(options?: BridgeHandlers['openCamera']['request']): Promise<{
-        uri: string;
-        fileName?: string;
-        mimeType?: string;
-        fileSize?: number;
-    }>;
-    getUserInfoOrThrow(): Promise<{
-        id: string;
-        name?: string;
-        email?: string;
-        phone?: string;
-        avatar?: string;
-    }>;
+    callHandler<TResponse = unknown, TRequest = unknown>(handlerName: string, args?: TRequest): Promise<BridgeResponse<TResponse>>;
+    startNDA(request: StartNDARequest): Promise<BridgeResponse<StartNDAResponse>>;
+    getBalance(request: GetBalanceRequest): Promise<BridgeResponse<GetBalanceResponse>>;
+    getWallet(request: GetWalletRequest): Promise<BridgeResponse<GetWalletResponse>>;
+    showConsent(request: ShowConsentRequest): Promise<BridgeResponse<ShowConsentResponse>>;
+    showCamera(request: ShowCameraRequest): Promise<BridgeResponse<ShowCameraResponse>>;
+    requestSSOCode(request: RequestSSOCodeRequest): Promise<BridgeResponse<RequestSSOCodeResponse>>;
+    getHPayPaymentUrl(request: GetHPayPaymentUrlRequest): Promise<BridgeResponse<GetHPayPaymentUrlResponse>>;
+    openURL(request: OpenURLRequest): Promise<BridgeResponse<OpenURLResponse>>;
 }
 declare const _default: FlutterBridge;
 
-export { type BridgeHandlerName, type BridgeHandlers, type BridgeResponse, _default as FlutterBridge, _default as default };
+export { type BridgeResponse, _default as FlutterBridge, type GetBalanceRequest, type GetBalanceResponse, type GetHPayPaymentUrlRequest, type GetHPayPaymentUrlResponse, type GetWalletRequest, type GetWalletResponse, type OpenURLRequest, type OpenURLResponse, type RequestSSOCodeRequest, type RequestSSOCodeResponse, type ShowCameraRequest, type ShowCameraResponse, type ShowConsentRequest, type ShowConsentResponse, type StartNDARequest, type StartNDAResponse, _default as default };
