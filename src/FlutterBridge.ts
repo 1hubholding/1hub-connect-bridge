@@ -12,8 +12,6 @@ import type {
   RequestSSOCodeResponse,
   ShowCameraRequest,
   ShowCameraResponse,
-  ShowConsentRequest,
-  ShowConsentResponse,
   StartNDARequest,
   StartNDAResponse,
 } from './types/bridge.types';
@@ -61,7 +59,7 @@ class FlutterBridge {
   async getWallet(request: GetWalletRequest): Promise<BridgeResponse<GetWalletResponse>> {
     return this.callHandler<GetWalletResponse, GetWalletRequest>('getWallet', request);
   }
-  
+
   async showCamera(request: ShowCameraRequest): Promise<BridgeResponse<ShowCameraResponse>> {
     return this.callHandler<ShowCameraResponse, ShowCameraRequest>('showCamera', request);
   }
